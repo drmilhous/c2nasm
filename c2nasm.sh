@@ -26,6 +26,12 @@ sed -i 's|\s\+$||g' "$NASM_FILE"
 sed -i 's|align=1||g' "$NASM_FILE"
 echo 'Nasm file generated in '"$NASM_FILE"
 nasm -f elf32 -o "$NASM_O_FILE" "$NASM_FILE"
-gcc -m32 -lGL -lm -o "$EXEC_FILE"  "$NASM_O_FILE"
+if gcc -m32 -lGL -lm -o "$EXEC_FILE"  "$NASM_O_FILE"; then
+ echo "GL Installed"
+else
+  gcc -m32 -lm -o "$EXEC_FILE"  "$NASM_O_FILE"
+fi
+
 echo 'Successfully compiled '"$NASM_FILE" to "$EXEC_FILE"
+
 
